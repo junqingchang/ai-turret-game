@@ -6,6 +6,8 @@ public class EnemyUnit : MonoBehaviour
 {
     protected Rigidbody mRigidbody;
 
+    public GameObject _unitEntered;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +39,8 @@ public class EnemyUnit : MonoBehaviour
         {
             Turret t = turret.GetComponent<Turret>();
             t.EnemyEntered();
+            GameObject unitAnimation = Instantiate(_unitEntered, transform.position, transform.rotation);
+            Destroy(unitAnimation, 1);
             Destroy(gameObject);
         }
 

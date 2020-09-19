@@ -70,9 +70,10 @@ public class TurretManager : MonoBehaviour
             yield return new WaitForSeconds(delay);
 
             Vector3 newSpawnPoint;  //new spawn point 
-            Vector3 random = UnityEngine.Random.insideUnitCircle.normalized * spawnDistance;
+            
             while(true)
             {
+                Vector3 random = UnityEngine.Random.insideUnitCircle.normalized * spawnDistance;
                 newSpawnPoint = new Vector3 (random.x, 0, random.y);
                 var hitColliders = Physics.OverlapSphere(newSpawnPoint, 1);
                 if(hitColliders.Length <= 1)
@@ -97,9 +98,9 @@ public class TurretManager : MonoBehaviour
             yield return new WaitForSeconds(delay);
 
             Vector3 newSpawnPoint;  //new spawn point 
-            Vector3 random = UnityEngine.Random.insideUnitCircle.normalized * spawnDistance;
             while(true)
             {
+                Vector3 random = UnityEngine.Random.insideUnitCircle.normalized * spawnDistance;
                 newSpawnPoint = new Vector3 (random.x, 0, random.y);
                 var hitColliders = Physics.OverlapSphere(newSpawnPoint, 1);
                 if(hitColliders.Length <= 1)

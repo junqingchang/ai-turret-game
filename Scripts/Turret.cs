@@ -8,9 +8,9 @@ public class Turret : MonoBehaviour
 
     public bool _inputIsEnabled = true;
 
-    protected float friendlySaved = 0;
-    protected float friendlyKilled = 0;
-    protected float enemyEntered = 0;
+    public float friendlySaved = 0;
+    public float friendlyKilled = 0;
+    public float enemyEntered = 0;
 
     protected Rigidbody mRigidbody;
 
@@ -20,7 +20,7 @@ public class Turret : MonoBehaviour
     protected float mOriginalPitch;
     public float _pitchRange = 0.2f;
 
-    protected TurretFiringSystem mTurretShot;
+    public TurretFiringSystem mTurretShot;
 
     protected string mHorizontalAxisInputName = "Horizontal";
     protected float mHorizontalInputValue = 0f;
@@ -44,10 +44,13 @@ public class Turret : MonoBehaviour
 
     public GameObject _turretExplosion;
 
+    private TurretAgent mTurretAgent;
+
     void Awake()
     {
         mRigidbody = GetComponent<Rigidbody>();
         mTurretShot = GetComponent<TurretFiringSystem>();
+        mTurretAgent = GetComponent<TurretAgent>();
     }
 
     // Start is called before the first frame update
@@ -72,9 +75,11 @@ public class Turret : MonoBehaviour
                 }
                 break;
             case State.DEATH:
+                mTurretAgent.EndEpisode();
                 Death();
                 break;
             case State.WON:
+                mTurretAgent.EndEpisode();
                 gameObject.SetActive(false);
                 mRigidbody.isKinematic = true;
                 _inputIsEnabled = false;
@@ -132,7 +137,7 @@ public class Turret : MonoBehaviour
         this.state = state;
     }
 
-    protected void PlaySFX(AudioClip clip)
+    public void PlaySFX(AudioClip clip)
     {
         _turretSFX.clip = clip;
         _turretSFX.pitch = mOriginalPitch + Random.Range(-_pitchRange, _pitchRange);
@@ -171,9 +176,11 @@ public class Turret : MonoBehaviour
                     case State.MOVING:
                         break;
                     case State.DEATH:
+                        mTurretAgent.EndEpisode();
                         Death();
                         break;
                     case State.WON:
+                        mTurretAgent.EndEpisode();
                         gameObject.SetActive(false);
                         dTurretWon.Invoke(this);
                         mRigidbody.isKinematic = true;
@@ -198,6 +205,7 @@ public class Turret : MonoBehaviour
         if (mState != State.INACTIVE || mState != State.DEATH || mState != State.WON)
         {
             enemyEntered++;
+            mTurretAgent.AddReward(-1.0f);
             GameObject manager = GameObject.Find("Manager");
             TurretManager tm = manager.GetComponent<TurretManager>();
             if (enemyEntered >= tm.EnemyEnterToLose)
@@ -213,6 +221,7 @@ public class Turret : MonoBehaviour
         if (mState != State.INACTIVE || mState != State.DEATH|| mState != State.WON)
         {
             friendlySaved++;
+            mTurretAgent.AddReward(1.0f);
             GameObject manager = GameObject.Find("Manager");
             TurretManager tm = manager.GetComponent<TurretManager>();
             if (friendlySaved >= tm.FriendlySaveToWin)
@@ -227,6 +236,7 @@ public class Turret : MonoBehaviour
         if (mState != State.INACTIVE || mState != State.DEATH|| mState != State.WON)
         {
             friendlyKilled++;
+            mTurretAgent.AddReward(-1.0f);
             GameObject manager = GameObject.Find("Manager");
             TurretManager tm = manager.GetComponent<TurretManager>();
             if (friendlyKilled >= tm.FriendlyKilledToLose)

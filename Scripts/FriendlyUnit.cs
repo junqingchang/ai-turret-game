@@ -50,6 +50,9 @@ public class FriendlyUnit : MonoBehaviour
         GameObject turret = GameObject.Find("Turret(Clone)");
         Turret t = turret.GetComponent<Turret>();
         t.FriendlyKilled();
+        GameObject manager = GameObject.Find("Manager");
+        TurretManager tm = manager.GetComponent<TurretManager>();
+        tm.mFriendly.Remove(gameObject);
         Destroy(gameObject);
     }
 }

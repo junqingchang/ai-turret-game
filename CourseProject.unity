@@ -172,9 +172,11 @@ MonoBehaviour:
   FriendlyColor: {r: 0, g: 0, b: 1, a: 1}
   EnemySpeed: 3
   FriendlySpeed: 3
-  FriendlySaveToWin: 2
+  FriendlySaveToWin: 10
   FriendlyKilledToLose: 2
-  EnemyEnterToLose: 2
+  EnemyEnterToLose: 1
+  mFriendly: []
+  mEnemy: []
 --- !u!114 &295848142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,8 +404,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248402022}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.745981, y: -3.340866, z: 54.4}
-  m_LocalScale: {x: 100, y: 10, z: 1}
+  m_LocalPosition: {x: -7.745981, y: -3.340866, z: 80.2}
+  m_LocalScale: {x: 100, y: 10, z: 50}
   m_Children: []
   m_Father: {fileID: 491736553}
   m_RootOrder: 2
@@ -493,8 +495,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288987800}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.745981, y: -3.340866, z: -44.741215}
-  m_LocalScale: {x: 100, y: 10, z: 1}
+  m_LocalPosition: {x: -7.745981, y: -3.340866, z: -71}
+  m_LocalScale: {x: 100, y: 10, z: 50}
   m_Children: []
   m_Father: {fileID: 491736553}
   m_RootOrder: 4
@@ -584,8 +586,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347529266}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -57.9, y: -3.340866, z: 4.5}
-  m_LocalScale: {x: 100, y: 10, z: 1}
+  m_LocalPosition: {x: -81.7, y: -3.340866, z: 4.5}
+  m_LocalScale: {x: 200, y: 10, z: 50}
   m_Children: []
   m_Father: {fileID: 491736553}
   m_RootOrder: 5
@@ -675,8 +677,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434367224}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 42.7, y: -3.340866, z: 4.9}
-  m_LocalScale: {x: 100, y: 10, z: 1}
+  m_LocalPosition: {x: 67, y: -3.340866, z: 4.9}
+  m_LocalScale: {x: 200, y: 10, z: 50}
   m_Children: []
   m_Father: {fileID: 491736553}
   m_RootOrder: 3

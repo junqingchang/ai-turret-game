@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95c402b32e2c424f988ec358ae88c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 100
+  _moveSpeed: 200
   _explosionMask:
     serializedVersion: 2
     m_Bits: 512

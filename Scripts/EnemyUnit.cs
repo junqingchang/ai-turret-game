@@ -48,6 +48,12 @@ public class EnemyUnit : MonoBehaviour
 
     public void Death()
     {
+        GameObject manager = GameObject.Find("Manager");
+        TurretManager tm = manager.GetComponent<TurretManager>();
+        GameObject turret = GameObject.Find("Turret(Clone)");
+        TurretAgent agent = turret.GetComponent<TurretAgent>();
+        agent.AddReward(1.0f);
+        tm.mEnemy.Remove(gameObject);
         Destroy(gameObject);
     }
 

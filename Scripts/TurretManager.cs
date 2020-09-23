@@ -34,6 +34,9 @@ public class TurretManager : MonoBehaviour
     protected Coroutine friendlySpawner;
     protected Coroutine enemySpawner;
 
+    public List<GameObject> mFriendly = new List<GameObject>();
+    public List<GameObject> mEnemy = new List<GameObject>();
+
     private void Awake()
     {
         SpawnTurret();
@@ -84,6 +87,7 @@ public class TurretManager : MonoBehaviour
 
             newSpawnPoint += transform.position;
             GameObject newUnit = Instantiate (_enemyUnitPrefab, newSpawnPoint, Quaternion.identity);
+            mEnemy.Add(newUnit);
             MeshRenderer rend = newUnit.GetComponent<MeshRenderer>();
             rend.material.color = EnemyColor;
             newUnit.transform.LookAt(turret.transform);
@@ -111,6 +115,7 @@ public class TurretManager : MonoBehaviour
 
             newSpawnPoint += transform.position;
             GameObject newUnit = Instantiate (_friendlyUnitPrefab, newSpawnPoint, Quaternion.identity);
+            mFriendly.Add(newUnit);
             MeshRenderer rend = newUnit.GetComponent<MeshRenderer>();
             rend.material.color = FriendlyColor;
             newUnit.transform.LookAt(turret.transform);
@@ -142,6 +147,8 @@ public class TurretManager : MonoBehaviour
     {
         Turret t = turret.GetComponent<Turret>();
         t.Restart(centerPoint, Quaternion.identity);
+        mFriendly = new List<GameObject>();
+        mEnemy = new List<GameObject>();
         enemySpawner = StartCoroutine(SpawnEnemyUnit(enemySpawnTime));
         friendlySpawner = StartCoroutine(SpawnFriendlyUnit(friendlySpawnTime));
     }

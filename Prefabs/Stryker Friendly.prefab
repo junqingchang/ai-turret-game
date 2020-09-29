@@ -1429,7 +1429,7 @@ GameObject:
   - component: {fileID: 4083229745171489592}
   m_Layer: 9
   m_Name: Stryker Friendly
-  m_TagString: unit
+  m_TagString: friendly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

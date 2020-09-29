@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 1176873087319796428}
   m_Layer: 9
   m_Name: Stryker
-  m_TagString: unit
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

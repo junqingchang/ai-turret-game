@@ -13,13 +13,13 @@ public class TurretManager : MonoBehaviour
     public Vector3 centerPoint;
 
     public float spawnDistance;
-    public float enemySpawnTime = 3f;
-
     public float reachDistance;
+    public float enemySpawnTime = 3f;
     public float friendlySpawnTime;
 
     public Color EnemyColor = Color.red;
     public Color FriendlyColor = Color.blue;
+    public Color CustomEnemyColor = Color.black;
 
     public float EnemySpeed;
     public float FriendlySpeed;
@@ -28,14 +28,20 @@ public class TurretManager : MonoBehaviour
     public float FriendlyKilledToLose;
     public float EnemyEnterToLose;
 
+    public bool randomEnemySize;
+    public bool customEnemy;
+
     public delegate void OnGameComplete();
     public OnGameComplete dOnGameComplete = null;
 
     protected Coroutine friendlySpawner;
     protected Coroutine enemySpawner;
 
-    public List<GameObject> mFriendly = new List<GameObject>();
-    public List<GameObject> mEnemy = new List<GameObject>();
+    public string gameEndState = "";
+
+    public int customHealth;
+
+    
 
     private void Awake()
     {
@@ -78,18 +84,36 @@ public class TurretManager : MonoBehaviour
             {
                 Vector3 random = UnityEngine.Random.insideUnitCircle.normalized * spawnDistance;
                 newSpawnPoint = new Vector3 (random.x, 0, random.y);
+                newSpawnPoint += transform.position;
                 var hitColliders = Physics.OverlapSphere(newSpawnPoint, 1);
                 if(hitColliders.Length <= 1)
                 {
                     break;
                 }
             }
-
-            newSpawnPoint += transform.position;
+            if (customEnemy)
+            {
+                customHealth = Random.Range(1, 3);
+            }
+            else
+            {
+                customHealth = 1;
+            }
             GameObject newUnit = Instantiate (_enemyUnitPrefab, newSpawnPoint, Quaternion.identity);
-            mEnemy.Add(newUnit);
+            if (randomEnemySize)
+            {
+                float scaleValue = Random.Range(0.5f, 1f);
+                newUnit.transform.localScale = new Vector3(scaleValue, 1f, 0.5f * scaleValue);
+            }
             MeshRenderer rend = newUnit.GetComponent<MeshRenderer>();
-            rend.material.color = EnemyColor;
+            if (customHealth == 2)
+            {
+                rend.material.color = CustomEnemyColor;
+            }
+            else
+            {
+                rend.material.color = EnemyColor;
+            }
             newUnit.transform.LookAt(turret.transform);
         }
         
@@ -106,6 +130,7 @@ public class TurretManager : MonoBehaviour
             {
                 Vector3 random = UnityEngine.Random.insideUnitCircle.normalized * spawnDistance;
                 newSpawnPoint = new Vector3 (random.x, 0, random.y);
+                newSpawnPoint += transform.position;
                 var hitColliders = Physics.OverlapSphere(newSpawnPoint, 1);
                 if(hitColliders.Length <= 1)
                 {
@@ -113,9 +138,7 @@ public class TurretManager : MonoBehaviour
                 }
             }
 
-            newSpawnPoint += transform.position;
             GameObject newUnit = Instantiate (_friendlyUnitPrefab, newSpawnPoint, Quaternion.identity);
-            mFriendly.Add(newUnit);
             MeshRenderer rend = newUnit.GetComponent<MeshRenderer>();
             rend.material.color = FriendlyColor;
             newUnit.transform.LookAt(turret.transform);
@@ -147,15 +170,18 @@ public class TurretManager : MonoBehaviour
     {
         Turret t = turret.GetComponent<Turret>();
         t.Restart(centerPoint, Quaternion.identity);
-        mFriendly = new List<GameObject>();
-        mEnemy = new List<GameObject>();
         enemySpawner = StartCoroutine(SpawnEnemyUnit(enemySpawnTime));
         friendlySpawner = StartCoroutine(SpawnFriendlyUnit(friendlySpawnTime));
     }
 
     public void ClearAllUnits()
     {
-        GameObject[] allUnits = GameObject.FindGameObjectsWithTag("unit");
+        GameObject[] allUnits = GameObject.FindGameObjectsWithTag("friendly");
+        foreach(GameObject obj in allUnits) {
+            Destroy(obj);
+        }
+
+        allUnits = GameObject.FindGameObjectsWithTag("enemy");
         foreach(GameObject obj in allUnits) {
             Destroy(obj);
         }

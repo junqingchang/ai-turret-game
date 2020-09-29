@@ -8,10 +8,17 @@ public class EnemyUnit : MonoBehaviour
 
     public GameObject _unitEntered;
 
+    public float health;
+
+
     // Start is called before the first frame update
     void Start()
     {
         mRigidbody = GetComponent<Rigidbody>();
+        GameObject manager = GameObject.Find("Manager");
+        TurretManager tm = manager.GetComponent<TurretManager>();
+        health = tm.customHealth;
+
     }
 
     // Update is called once per frame
@@ -33,9 +40,13 @@ public class EnemyUnit : MonoBehaviour
         mRigidbody.MovePosition(mRigidbody.position + moveVect);
 
         GameObject turret = GameObject.Find("Turret(Clone)");
+        if (turret == null)
+        {
+            turret = GameObject.Find("Turret Hard(Clone)");
+        }
         float distance = Vector3.Distance(this.transform.position, turret.transform.position);
-        // -2.5 for the turret size
-        if (distance-2.5 <= tm.reachDistance)
+        // -1.5 for the turret size
+        if (distance-1.5 <= tm.reachDistance)
         {
             Turret t = turret.GetComponent<Turret>();
             t.EnemyEntered();
@@ -48,13 +59,16 @@ public class EnemyUnit : MonoBehaviour
 
     public void Death()
     {
-        GameObject manager = GameObject.Find("Manager");
-        TurretManager tm = manager.GetComponent<TurretManager>();
         GameObject turret = GameObject.Find("Turret(Clone)");
+        if (turret == null)
+        {
+            turret = GameObject.Find("Turret Hard(Clone)");
+        }
         TurretAgent agent = turret.GetComponent<TurretAgent>();
         agent.AddReward(1.0f);
-        tm.mEnemy.Remove(gameObject);
-        Destroy(gameObject);
+        health -= 1;
+        if (health <= 0){
+            Destroy(gameObject);
+        }
     }
-
 }

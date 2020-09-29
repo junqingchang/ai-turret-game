@@ -33,9 +33,13 @@ public class FriendlyUnit : MonoBehaviour
         mRigidbody.MovePosition(mRigidbody.position + moveVect);
 
         GameObject turret = GameObject.Find("Turret(Clone)");
+        if (turret == null)
+        {
+            turret = GameObject.Find("Turret Hard(Clone)");
+        }
         float distance = Vector3.Distance(this.transform.position, turret.transform.position);
-        // -2.5 for the turret size
-        if (distance-2.5 <= tm.reachDistance)
+        // -1.5 for the turret size
+        if (distance-1.5 <= tm.reachDistance)
         {
             Turret t = turret.GetComponent<Turret>();
             t.FriendlySaved();
@@ -48,11 +52,12 @@ public class FriendlyUnit : MonoBehaviour
     public void Death()
     {
         GameObject turret = GameObject.Find("Turret(Clone)");
+        if (turret == null)
+        {
+            turret = GameObject.Find("Turret Hard(Clone)");
+        }
         Turret t = turret.GetComponent<Turret>();
         t.FriendlyKilled();
-        GameObject manager = GameObject.Find("Manager");
-        TurretManager tm = manager.GetComponent<TurretManager>();
-        tm.mFriendly.Remove(gameObject);
         Destroy(gameObject);
     }
 }

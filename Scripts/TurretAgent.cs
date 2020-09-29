@@ -15,6 +15,10 @@ public class TurretAgent : Agent
     void Start()
     {
         turret = GameObject.Find("Turret(Clone)");
+        if (turret == null)
+        {
+            turret = GameObject.Find("Turret Hard(Clone)");
+        }
         Turret t = turret.GetComponent<Turret>();
         _rotationSpeed = t._rotationSpeed;
         mRigidbody = GetComponent<Rigidbody>();
@@ -28,45 +32,45 @@ public class TurretAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         // Friendly and Enemy Units
-        GameObject manager = GameObject.Find("Manager");
-        TurretManager tm = manager.GetComponent<TurretManager>();
-        int counter = 0;
-        foreach (GameObject friendly in tm.mFriendly)
-        {
-            if (friendly != null){
-                sensor.AddObservation(friendly.transform.position);
-                counter++;
-            }
+        // GameObject manager = GameObject.Find("Manager");
+        // TurretManager tm = manager.GetComponent<TurretManager>();
+        // int counter = 0;
+        // foreach (GameObject friendly in tm.mFriendly)
+        // {
+        //     if (friendly != null){
+        //         sensor.AddObservation(friendly.transform.position);
+        //         counter++;
+        //     }
             
-            if(counter == 5)
-            {
-                break;
-            }
-        }
-        while(counter < 5)
-        {
-            sensor.AddObservation(Vector3.zero);
-            counter++;
-        }
-        counter = 0;
-        foreach (GameObject enemy in tm.mEnemy)
-        {
-            if (enemy != null)
-            {
-                sensor.AddObservation(enemy.transform.position);
-                counter++;
-            }
+        //     if(counter == 5)
+        //     {
+        //         break;
+        //     }
+        // }
+        // while(counter < 5)
+        // {
+        //     sensor.AddObservation(Vector3.zero);
+        //     counter++;
+        // }
+        // counter = 0;
+        // foreach (GameObject enemy in tm.mEnemy)
+        // {
+        //     if (enemy != null)
+        //     {
+        //         sensor.AddObservation(enemy.transform.position);
+        //         counter++;
+        //     }
             
-            if(counter == 5)
-            {
-                break;
-            }
-        }
-        while(counter < 5)
-        {
-            sensor.AddObservation(Vector3.zero);
-            counter++;
-        }
+        //     if(counter == 5)
+        //     {
+        //         break;
+        //     }
+        // }
+        // while(counter < 5)
+        // {
+        //     sensor.AddObservation(Vector3.zero);
+        //     counter++;
+        // }
 
         // Current rotation
         sensor.AddObservation(this.transform.rotation);

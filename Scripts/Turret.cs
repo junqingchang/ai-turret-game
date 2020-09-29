@@ -177,10 +177,12 @@ public class Turret : MonoBehaviour
                         break;
                     case State.DEATH:
                         mTurretAgent.EndEpisode();
+                        Debug.Log("Lost");
                         Death();
                         break;
                     case State.WON:
                         mTurretAgent.EndEpisode();
+                        Debug.Log("Won");
                         gameObject.SetActive(false);
                         dTurretWon.Invoke(this);
                         mRigidbody.isKinematic = true;
@@ -211,6 +213,7 @@ public class Turret : MonoBehaviour
             if (enemyEntered >= tm.EnemyEnterToLose)
             {
                 tm.ClearAllUnits();
+                tm.gameEndState = "You Lost";
                 state = State.DEATH;
             }
                 
@@ -226,6 +229,7 @@ public class Turret : MonoBehaviour
             TurretManager tm = manager.GetComponent<TurretManager>();
             if (friendlySaved >= tm.FriendlySaveToWin)
             {
+                tm.gameEndState = "You Won";
                 state = State.WON;
             }
                 
@@ -241,6 +245,7 @@ public class Turret : MonoBehaviour
             TurretManager tm = manager.GetComponent<TurretManager>();
             if (friendlyKilled >= tm.FriendlyKilledToLose)
             {
+                tm.gameEndState = "You Lost";
                 state = State.DEATH;
             }
                 

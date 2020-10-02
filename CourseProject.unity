@@ -2429,7 +2429,7 @@ MonoBehaviour:
   FriendlyKilledToLose: 2
   EnemyEnterToLose: 1
   randomEnemySize: 0
-  customEnemy: 1
+  customEnemy: 0
   gameEndState: 
   customHealth: 0
 --- !u!1 &1662219406
